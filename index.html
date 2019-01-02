@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+
+        #table {
+            background: blue;
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            padding: 5px;
+            margin: 5px;
+            border-collapse:collapse ;
+        }
+        #cell{
+            border:solid blue 3px;
+            border-collapse:collapse;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<p id="scoreboard"> Misses: 0 Correct: 0 </p>
+
+<div id="table">
+
+    <div id="cell">
+
+    <img id="0" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+    <div id="cell">
+
+    <img id="1" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+
+    <div id="cell">
+
+    <img id="2" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+    <div id="cell">
+
+    <img id="3" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+    <div id="cell">
+
+    <img id="4" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+    <div id="cell">
+
+    <img id="5" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+    <div id="cell">
+
+    <img id="6" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+    <div id="cell">
+
+    <img id="7" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+    <div id="cell">
+
+    <img id="8" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+    <div id="cell">
+
+    <img id="9" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+    <div id="cell">
+
+    <img id="10" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+    <div id="cell">
+
+    <img id="11" height="200" width="200" onclick="turnover(this)">
+
+    </div>
+
+</div>
+
+<script>
+
+//variables
+    var wrong = 0;
+    var correct = 0;
+    var arr = ["marge.jpg","homer.jpg","lisa.jpg","magie.jpg","grandpa.jpg","bart.jpg","marge.jpg","bart.jpg","magie.jpg","grandpa.jpg","homer.jpg","lisa.jpg"];
+    var sc = document.getElementById("scoreboard");
+    var count = 0;
+    var w;
+
+//functions
+
+    function shuffle(array) {
+
+        for (var i = 0; i < array.length; i++) {
+            var swap = Math.floor(Math.random() * array.length);
+            var temp = array[i];
+            array[i] = array[swap];
+            array[swap] = temp;
+
+        }
+
+        return array;
+    }
+     function Gameover(num) {
+        if (num === 6) {
+            if (correct > wrong) {
+                alert("You Won!!");
+            }
+            else if (num === wrong) {
+                alert("Tie!!.. Try Again")
+            }
+            else {
+                alert("GAME OVER!! YOU LOST!!")
+            }
+        }
+    }
+
+    function turnover(img) {
+        img.src = arr[img.id];
+        count++;
+        if (count === 1) {
+            w = img.id;
+        }
+        else if (count === 2) {
+            var img1 = document.getElementById(w);
+            if (img.src === img1.src) {
+                correct++;
+                count = 0;
+                sc.innerHTML = "  Misses: " + wrong + "  Correct: " + correct;
+            }
+            else {
+                setTimeout(function () {
+                    turnover(img)
+                }, 1000);
+                wrong++;
+                sc.innerHTML = "  Misses: " + wrong + "  Correct: " + correct;
+            }
+        }
+        else {
+            img.src = "original.png";
+            console.log("count = ", count);
+            var img1 = document.getElementById(w);
+            img1.src = "original.png";
+            count = 0;
+        }
+        setTimeout(function(){Gameover(correct)},1000);
+    }
+
+
+
+    function init() {
+        arr = shuffle(arr);
+        for (var i = 0; i < 12; i++) {
+            var p = document.getElementById(i);
+            p.src = "original.png";
+        }
+    }
+
+    window.onload = init;
+
+
+</script>
+
+</body>
+</html>
